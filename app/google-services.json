@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "904733691897",
+    "firebase_url": "https://chatroom-ebce3-default-rtdb.firebaseio.com",
+    "project_id": "chatroom-ebce3",
+    "storage_bucket": "chatroom-ebce3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904733691897:android:80d91022871bb109f5f728",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ChqrCk7Y7o5ulT1xbxtzyw85K7qVZos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
