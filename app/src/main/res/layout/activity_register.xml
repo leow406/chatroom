@@ -5,28 +5,31 @@
     android:padding="16dp"
     android:background="#FFFFFF">
 
+    <!-- Titre de la page d'inscription -->
     <TextView
-        android:id="@+id/loginTitle"
+        android:id="@+id/registerTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Connexion"
+        android:text="Inscription"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
         android:layout_alignParentTop="true"/>
 
+    <!-- Champ pour le pseudo -->
     <EditText
         android:id="@+id/usernameField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Pseudo"
-        android:layout_below="@id/loginTitle"
+        android:layout_below="@id/registerTitle"
         android:layout_marginTop="16dp"
         android:padding="12dp"
         android:background="@android:drawable/editbox_background"
         android:inputType="textPersonName"/>
 
+    <!-- Champ pour le mot de passe -->
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="match_parent"
@@ -38,23 +41,14 @@
         android:background="@android:drawable/editbox_background"
         android:inputType="textPassword"/>
 
+    <!-- Bouton d'inscription -->
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Se connecter"
+        android:text="S'inscrire"
         android:layout_below="@id/passwordField"
         android:layout_marginTop="24dp"
         android:padding="12dp"/>
 
-    <TextView
-        android:id="@+id/registerRedirect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pas de compte ? Inscrivez-vous"
-        android:textColor="#007BFF"
-        android:layout_below="@id/loginButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textSize="14sp"/>
 </RelativeLayout>

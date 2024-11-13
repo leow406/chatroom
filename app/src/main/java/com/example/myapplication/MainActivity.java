@@ -24,11 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView messageRecyclerView;
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
+    private String currentUsername;  // Variable pour stocker le pseudo de l'utilisateur connecté
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Obtient le pseudo de l'utilisateur connecté (transmis depuis LoginActivity ou RegisterActivity)
+        currentUsername = getIntent().getStringExtra("username");
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages");
         messageInput = findViewById(R.id.messageInput);
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> {
             String messageContent = messageInput.getText().toString();
             if (!messageContent.isEmpty()) {
-                Message message = new Message(messageContent, "UsernamePlaceholder", 0);
+                Message message = new Message(messageContent, currentUsername, 0);
                 DatabaseReference newMessageRef = mDatabase.push();
                 message.setKey(newMessageRef.getKey());
                 newMessageRef.setValue(message);
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors
+                // Gestion des erreurs possibles
             }
         });
     }
