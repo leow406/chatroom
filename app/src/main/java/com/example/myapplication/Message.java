@@ -4,20 +4,20 @@ public class Message {
     private String content;
     private String username;
     private long timestamp;
-    private int likes;  // Ajout du champ "likes"
+    private int likes;
+    private String key; // Clé pour référencer le message dans Firebase
 
-    // Constructeur vide requis pour Firebase
     public Message() {
+        // Constructeur vide nécessaire pour Firebase
     }
 
     public Message(String content, String username, int likes) {
         this.content = content;
         this.username = username;
         this.likes = likes;
-        this.timestamp = System.currentTimeMillis(); // Utiliser un timestamp en millisecondes
+        this.timestamp = System.currentTimeMillis();
     }
 
-    // Getters et Setters
     public String getContent() {
         return content;
     }
@@ -32,5 +32,17 @@ public class Message {
 
     public int getLikes() {
         return likes;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

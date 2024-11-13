@@ -7,6 +7,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
@@ -25,13 +28,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        // Obtenir l'objet Message à la position spécifiée
         Message message = messageList.get(position);
-
-        // Remplir les vues avec les données du message
         holder.messageText.setText(message.getContent());
-        holder.timestampText.setText(String.valueOf(message.getTimestamp())); // vous pouvez formater ceci
+        holder.usernameText.setText(message.getUsername());
         holder.likeCount.setText(String.valueOf(message.getLikes()));
+
+        holder.likeButton.setOnClickListener(v -> {
+            int newLikeCount = message.getLikes() + 1;
+            DatabaseReference messageRef = FirebaseDatabase.getInstance().getReference("messages").child(message.getKey());
+            messageRef.child("likes").setValue(newLikeCount);
+            message.setLikes(newLikeCount);
+            notifyItemChanged(position);
+        });
     }
 
     @Override
@@ -40,13 +48,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timestampText, likeCount;
+        TextView messageText, usernameText, likeCount;
         ImageButton likeButton;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.messageText);
-            timestampText = itemView.findViewById(R.id.timestampText);
+            usernameText = itemView.findViewById(R.id.usernameText);
             likeCount = itemView.findViewById(R.id.likeCount);
             likeButton = itemView.findViewById(R.id.likeButton);
         }
