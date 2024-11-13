@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.example.myapplication"
-    compileSdk = 34  // Cela reste inchangé
+    compileSdk = 34  // Reste inchangé
 
     defaultConfig {
         applicationId = "com.example.myapplication"
-        minSdk = 21  // Changez cette valeur à 21
+        minSdk = 23  // Modifié de 21 à 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -37,8 +37,9 @@ dependencies {
     // Firebase and Room
     implementation(platform(libs.firebase.bom))  // Firebase BoM pour gérer les versions
     implementation(libs.firebase.database)  // Firebase Realtime Database
+    implementation(libs.firebase.auth)  // Firebase Authentication
     implementation(libs.room.runtime)  // Room Database
-    annotationProcessor(libs.room.compiler)
+    annotationProcessor(libs.room.compiler)  // Room Database Compiler
 
     // Autres dépendances
     implementation(libs.appcompat)
