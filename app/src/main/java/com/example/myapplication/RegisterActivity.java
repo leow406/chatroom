@@ -52,3 +52,4 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 }
+//fixed regsiter to login 14/11
