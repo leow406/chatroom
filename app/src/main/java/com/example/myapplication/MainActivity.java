@@ -3,9 +3,12 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.view.View;
+import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private EditText messageInput;
-    private ImageButton sendButton;
+    private ImageButton sendButton, logoutButton;
     private RecyclerView messageRecyclerView;
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages");
         messageInput = findViewById(R.id.messageInput);
         sendButton = findViewById(R.id.sendButton);
+        logoutButton = findViewById(R.id.logoutButton);
         messageRecyclerView = findViewById(R.id.recyclerView);
 
         messageList = new ArrayList<>();
@@ -51,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
                 newMessageRef.setValue(message);
                 messageInput.setText("");
             }
+        });
+
+        // Action de déconnexion
+        logoutButton.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         });
 
         mDatabase.addValueEventListener(new ValueEventListener() {
