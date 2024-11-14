@@ -39,7 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
             mDatabase.child(userId).setValue(user)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            Toast.makeText(RegisterActivity.this, "Inscription réussie !", Toast.LENGTH_SHORT).show();
+                            // Redirige vers LoginActivity après inscription
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             finish();
                         } else {
                             Toast.makeText(RegisterActivity.this, "Échec de l'inscription.", Toast.LENGTH_SHORT).show();
