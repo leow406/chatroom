@@ -1,3 +1,4 @@
+// MainActivity.java
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
@@ -7,13 +8,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +23,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView messageRecyclerView;
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
-    private String currentUsername;  // Variable pour stocker le pseudo de l'utilisateur connecté
+    private String currentUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Obtient le pseudo de l'utilisateur connecté (transmis depuis LoginActivity ou RegisterActivity)
         currentUsername = getIntent().getStringExtra("username");
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("messages");
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         messageRecyclerView = findViewById(R.id.recyclerView);
 
         messageList = new ArrayList<>();
-        messageAdapter = new MessageAdapter(messageList);
+        messageAdapter = new MessageAdapter(messageList, currentUsername);
         messageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageRecyclerView.setAdapter(messageAdapter);
 
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Gestion des erreurs possibles
+                // Gérer les erreurs possibles
             }
         });
     }

@@ -1,14 +1,19 @@
+// Message.java
 package com.example.myapplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Message {
     private String content;
     private String username;
     private long timestamp;
     private int likes;
-    private String key; // Clé pour référencer le message dans Firebase
+    private String key;
+    private List<String> likedByUsers; // Liste des utilisateurs ayant liké le message
 
     public Message() {
-        // Constructeur vide nécessaire pour Firebase
+        likedByUsers = new ArrayList<>(); // Initialisation de la liste pour éviter les références nulles
     }
 
     public Message(String content, String username, int likes) {
@@ -16,6 +21,7 @@ public class Message {
         this.username = username;
         this.likes = likes;
         this.timestamp = System.currentTimeMillis();
+        this.likedByUsers = new ArrayList<>();
     }
 
     public String getContent() {
@@ -38,11 +44,19 @@ public class Message {
         return key;
     }
 
+    public List<String> getLikedByUsers() {
+        return likedByUsers;
+    }
+
     public void setKey(String key) {
         this.key = key;
     }
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public void setLikedByUsers(List<String> likedByUsers) {
+        this.likedByUsers = likedByUsers;
     }
 }
