@@ -1,4 +1,4 @@
-// Message.java
+// Message.java - Updated with sortingScore
 package com.example.myapplication;
 
 import java.util.ArrayList;
@@ -10,10 +10,11 @@ public class Message {
     private long timestamp;
     private int likes;
     private String key;
-    private List<String> likedByUsers; // Liste des utilisateurs ayant liké le message
+    private double sortingScore; // Nouvelle propriété pour le tri
+    private List<String> likedByUsers;
 
     public Message() {
-        likedByUsers = new ArrayList<>(); // Initialisation de la liste pour éviter les références nulles
+        likedByUsers = new ArrayList<>();
     }
 
     public Message(String content, String username, int likes) {
@@ -48,6 +49,10 @@ public class Message {
         return likedByUsers;
     }
 
+    public double getSortingScore() {
+        return sortingScore;
+    }
+
     public void setKey(String key) {
         this.key = key;
     }
@@ -58,5 +63,9 @@ public class Message {
 
     public void setLikedByUsers(List<String> likedByUsers) {
         this.likedByUsers = likedByUsers;
+    }
+
+    public void setSortingScore(double sortingScore) {
+        this.sortingScore = sortingScore; // Setter pour sortingScore
     }
 }

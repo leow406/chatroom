@@ -53,10 +53,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             notifyItemRangeChanged(position, messageList.size());  // Ajuster les positions suivantes
         });
 
-        // Gestion du clic sur le bouton de like
+// Gestion du clic sur le bouton de like
         if (message.getLikedByUsers().contains(currentUsername)) {
-            holder.likeButton.setEnabled(false);
+            holder.likeButton.setImageResource(R.drawable.star_on); // Étoile jaune
+            holder.likeButton.setEnabled(true); // Permettre le dé-like
+            holder.likeButton.setOnClickListener(v -> {
+                message.getLikedByUsers().remove(currentUsername); // Retirer le like
+                int newLikeCount = message.getLikes() - 1;
+                message.setLikes(newLikeCount);
+
+                // Mise à jour de Firebase
+                DatabaseReference messageRef = FirebaseDatabase.getInstance().getReference("messages").child(message.getKey());
+                messageRef.child("likes").setValue(newLikeCount);
+                messageRef.child("likedByUsers").setValue(message.getLikedByUsers());
+
+                holder.likeCount.setText(String.valueOf(newLikeCount));
+                holder.likeButton.setImageResource(R.drawable.star_off); // Étoile grise
+            });
         } else {
+            holder.likeButton.setImageResource(R.drawable.star_off); // Étoile grise
             holder.likeButton.setEnabled(true);
             holder.likeButton.setOnClickListener(v -> {
                 if (!message.getLikedByUsers().contains(currentUsername)) {
@@ -70,11 +85,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     messageRef.child("likedByUsers").setValue(message.getLikedByUsers());
 
                     holder.likeCount.setText(String.valueOf(newLikeCount));
-                    holder.likeButton.setEnabled(false); // Désactiver le bouton après le like
-                } else {
-                    Toast.makeText(holder.itemView.getContext(), "Vous avez déjà aimé ce message.", Toast.LENGTH_SHORT).show();
+                    holder.likeButton.setImageResource(R.drawable.star_on); // Étoile jaune
                 }
             });
+
         }
     }
 

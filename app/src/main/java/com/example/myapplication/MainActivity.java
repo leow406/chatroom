@@ -1,4 +1,4 @@
-// MainActivity.java
+// MainActivity.java - Updated with sorting logic
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.view.View;
-import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Action de déconnexion
         logoutButton.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         messageList.add(message);
                     }
                 }
+                sortMessages(); // Appliquer le tri avant d’afficher
                 messageAdapter.notifyDataSetChanged();
             }
 
@@ -82,5 +82,16 @@ public class MainActivity extends AppCompatActivity {
                 // Gérer les erreurs possibles
             }
         });
+    }
+
+    private void sortMessages() {
+        long currentTime = System.currentTimeMillis();
+        for (Message message : messageList) {
+            long messageAgeInDays = (currentTime - message.getTimestamp()) / (1000 * 60 * 60 * 24);
+            double omega = 30 - messageAgeInDays * message.getLikes();
+            message.setSortingScore(omega); // Nouvelle méthode pour définir le score
+        }
+
+        Collections.sort(messageList, Comparator.comparingDouble(Message::getSortingScore).reversed());
     }
 }
